@@ -1,0 +1,6 @@
+project_id   = "mlops-project"
+region       = "us-central1"
+bucket_name  = "mlops-bucket"
+location     = "US"
+bigquery_dataset_id = "bigquery_dataset"
+vertex_ai_endpoint_name = "my_vertex_ai_endpoint"

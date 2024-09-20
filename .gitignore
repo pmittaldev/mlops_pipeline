@@ -1,0 +1,10 @@
+.idea
+dist
+__pycache__
+.run
+.pytest_cache
+.ruff_cache
+.vscode/
+.devcontainer/
+.DS_Store
+/terraform/.terraform
