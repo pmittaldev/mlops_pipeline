@@ -17,7 +17,15 @@
 
 This project implements a machine learning pipeline using the **Facade Pattern**. The pipeline encapsulates the steps for data preprocessing, model training, and evaluation, and presents a simple, easy-to-use interface for these processes. The pipeline is designed to work with the iris dataset and uses **Logistic Regression** for classification tasks.
 
+### Prerequisites
+
+* Ensure that **Python 3.11 or above** is installed on your system and configured as `python3`. You can check the installed version with:
+  ```bash
+  python3 --version
+
 ## Setup
+
+* Make sure python 3.11 or above is installed on the system and configured with python3
 
 This project uses [Poetry](https://python-poetry.org/) to manage dependencies and virtual environments.
 
@@ -41,6 +49,8 @@ This project uses [Poetry](https://python-poetry.org/) to manage dependencies an
 ## Running Terraform
 
 To provision the infrastructure using Terraform, follow these steps:
+
+change the directory to /terraform
 
 1. **Initialize Terraform**:
 
@@ -68,7 +78,7 @@ To provision the infrastructure using Terraform, follow these steps:
 
 ## Running Tests
 
-To run tests with Poetry:
+To run tests and Linting with Poetry:
 
 1. **Run Tests**:
 
@@ -78,21 +88,14 @@ To run tests with Poetry:
     poetry run pytest
     ```
 
-2. **Check Code Formatting**:
+2. **Run linting**:
 
-    To check code formatting with `black`, use the following command:
-
-    ```bash
-    poetry run black --check .
-    ```
-
-3. **Format Code**:
-
-    To automatically format the code using `black`, run:
+    To run flake8 linter use the following command:
 
     ```bash
-    poetry run black .
+    poetry run flak8 .
     ```
+
 
 ## Running Notebook
 
