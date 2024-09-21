@@ -1,55 +1,60 @@
 import pytest
 import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression
 from src.model.ml_pipeline import MLPipeline
 
 
 @pytest.fixture
-def sample_data():
-    """Fixture that returns a simple dataset for testing."""
-    data = {
-        "SepalLengthCm": [5.1, 6.8, 4.7, 4.6, 5.0],
-        "SepalWidthCm": [3.5, 2.8, 3.2, 3.1, 3.6],
-        "PetalLengthCm": [1.4, 4.8, 1.3, 1.5, 1.4],
-        "PetalWidthCm": [0.2, 1.4, 0.2, 0.2, 0.2],
-        "Species": [
-            "Iris-setosa",
-            "Iris-versicolor",
-            "Iris-virginica",
-            "Iris-versicolor",
-            "Iris-versicolor",
-        ],
-    }
-    return pd.DataFrame(data)
+def iris_data():
+    iris = load_iris()
+    df = pd.DataFrame(iris.data, columns=iris.feature_names)
+    df["target"] = iris.target
+    return df
 
 
 @pytest.fixture
 def pipeline():
-    return MLPipeline()
+    """Fixture to initialize the MLPipeline with LogisticRegression."""
+    return MLPipeline(model=LogisticRegression())
 
 
-def test_preprocess(pipeline, sample_data):
-    """Test that preprocessing correctly scales the data."""
-    X, y = pipeline.preprocess(sample_data, "Species")
-    # Check that the target column is properly extracted
-    assert "Species" not in X.columns
-
-    # Check that the scaling worked (all values should have been transformed)
-    assert (X.values.mean() < 1e-7) and (X.values.std() - 1 < 1e-7)
+@pytest.fixture
+def processed_data(iris_data, pipeline):
+    """Fixture to preprocess the Iris data using MLPipeline."""
+    return pipeline.preprocess(iris_data, "target")
 
 
-def test_train(pipeline, sample_data):
-    """Test that the training function works correctly."""
-    X, y = pipeline.preprocess(sample_data, "Species")
-    X_test, y_test = pipeline.train(X, y)
-    # Check that the test data is returned properly
-    assert X_test.shape[0] == 1
-    assert y_test.shape[0] == 1
+def test_preprocessing(processed_data):
+    """Test the preprocessing step of MLPipeline."""
+    X_train, X_test, y_train, y_test = processed_data
+    # Assert that training and testing sets are not empty
+    assert len(X_train) > 0
+    assert len(X_test) > 0
+    assert len(y_train) > 0
+    assert len(y_test) > 0
 
 
-def test_evaluate(pipeline, sample_data):
-    """Test that the evaluation returns an accuracy score."""
-    X, y = pipeline.preprocess(sample_data, "Species")
-    X_test, y_test = pipeline.train(X, y)
+def test_training(pipeline, processed_data):
+    """Test the training step of MLPipeline."""
+    X_train, X_test, y_train, y_test = processed_data
+    # Train the model and ensure no exceptions are raised
+    pipeline.train(X_train, y_train)
+    # Check model has been trained (LogisticRegression uses 'coef_' attribute)
+    assert hasattr(pipeline.model, "coef_")
+
+
+def test_evaluation(pipeline, processed_data):
+    """Test the evaluation step of MLPipeline."""
+    X_train, X_test, y_train, y_test = processed_data
+    # Train the model before evaluation
+    pipeline.train(X_train, y_train)
     # Evaluate the model
-    accuracy = pipeline.evaluate(X_test, y_test)
-    assert accuracy == 1.0
+    metrics = pipeline.evaluate(X_test, y_test)
+    # Ensure the metrics are calculated correctly
+    assert "accuracy" in metrics
+    assert "precision" in metrics
+    assert "recall" in metrics
+    assert "f1_score" in metrics
+    # Check that accuracy is within a reasonable range
+    assert metrics["accuracy"] > 0.5

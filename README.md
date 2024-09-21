@@ -9,6 +9,7 @@
 - [Setup](#setup)
 - [Running Terraform](#running-terraform)
 - [Running Tests](#running-tests)
+- [Running Jupyter Notebook](#running-notebook)
 
 ---
 
@@ -20,17 +21,7 @@ This project implements a machine learning pipeline using the **Facade Pattern**
 
 This project uses [Poetry](https://python-poetry.org/) to manage dependencies and virtual environments.
 
-1. **Create a Virtual Environment**:
-   Using `venv`:
-
-   Navigate to the project folder, then run:
-
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate
-   ```
-
-2. **Install Poetry**:
+1. **Install Poetry**:
 
    You can install Poetry by running:
 
@@ -38,9 +29,13 @@ This project uses [Poetry](https://python-poetry.org/) to manage dependencies an
    curl -sSL https://install.python-poetry.org | python3 -
    ```
 
-3. **Install Dependencies**:
+2. **Install Dependencies**:
     ```bash
     poetry install
+    ```
+2. **Activate Shell**:
+    ```bash
+    poetry shell
     ```
 
 ## Running Terraform
@@ -98,10 +93,22 @@ To run tests with Poetry:
     ```bash
     poetry run black .
     ```
-3. **Linting**:
 
-    To check linting using `flake8`, run:
+## Running Notebook
+
+1. **Activate enviroment if not yet done**
+    ```bash
+    poetry shell
+    ```
+
+2. **Activate enviroment if not yet done**
+Launch Jupyter Notebook
 
     ```bash
-    poetry run flake8 .
+    jupyter notebook
     ```
+
+This will open a new browser window with the Jupyter interface.
+3. **Open and Run the Notebook**:
+    *Navigate to the notebook/ml_pipeline.ipynb file in the Jupyter interface and open it.
+    *Follow the instructions in the notebook to run the pipeline. The notebook will walk you through preprocessing, training, and evaluating the model.
