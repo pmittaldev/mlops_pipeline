@@ -26,8 +26,6 @@ This project implements a machine learning pipeline using the **Facade Pattern**
 
 ## Setup
 
-* Make sure python 3.11 or above is installed on the system and configured with python3
-
 This project uses [Poetry](https://python-poetry.org/) to manage dependencies and virtual environments.
 
 1. **Install Poetry**:
