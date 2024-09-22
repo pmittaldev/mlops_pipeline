@@ -10,6 +10,7 @@
 - [Running Terraform](#running-terraform)
 - [Running Tests](#running-tests)
 - [Running Jupyter Notebook](#running-notebook)
+- [Running CI](#running-ci)
 
 ---
 
@@ -112,6 +113,12 @@ Launch Jupyter Notebook
     ```
 
 This will open a new browser window with the Jupyter interface.
+
 3. **Open and Run the Notebook**:
-    *Navigate to the notebook/ml_pipeline.ipynb file in the Jupyter interface and open it.
-    *Follow the instructions in the notebook to run the pipeline. The notebook will walk you through preprocessing, training, and evaluating the model.
+   
+    * Navigate to the notebook/ml_pipeline.ipynb file in the Jupyter interface and open it.
+    * Follow the instructions in the notebook to run the pipeline. The notebook will walk you through preprocessing, training, and evaluating the model.
+
+## Running CI
+
+The CI workflow to run the pytest and the linting is present under .github/workflows. The CI will get trigger on creating the pull request to the main branch. 
